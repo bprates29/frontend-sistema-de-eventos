@@ -1,4 +1,4 @@
-export default class Eventos {
+export default class Evento {
     id: number | null;
     nome: string;
     data: string;
