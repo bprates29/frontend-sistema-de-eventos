@@ -18,4 +18,23 @@ export default class Evento {
         this.descricao = descricao;
         this.status = status;
     }
+
+    static geraEventosMock() {
+        return [
+            new Evento(1, "UPF em Dança",
+            "10/11/2024",
+            "10/11/2024 17:00",
+            "10/11/2024 17:00",
+            "Evento de dança",
+            "PREVISTO",
+          ),
+          new Evento(2, "UPF na feitech",
+            "10/11/2024",
+            "10/11/2024 17:00",
+            "10/11/2024 17:00",
+            "Evento de tecnologia",
+            "PREVISTO",
+          )
+        ]
+      }
 }
