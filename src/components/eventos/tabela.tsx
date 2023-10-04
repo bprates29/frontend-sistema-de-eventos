@@ -3,10 +3,14 @@ import { IconeEdicao, IconeLixo } from "../icones/tabela"
 
 interface TabelaProps {
     eventos: Evento[]
+    eventoSelecionado?: (evento: Evento) => void
+    eventoExcluido?: (evento: Evento) => void
 }
 
 export default function Tabela(props: TabelaProps) {
-    //...
+    
+    const exibirAcoes = props.eventoSelecionado || props.eventoExcluido
+
     function renderHeader() {
         return (
             <tr>
@@ -15,7 +19,7 @@ export default function Tabela(props: TabelaProps) {
                 <th className="text-left p-3">data</th>
                 <th className="text-left p-3">descricao</th>
                 <th className="text-left p-3">status</th>
-                <th className="p-3">Ações</th>
+                {exibirAcoes ? <th className="p-3">Ações</th> : false}
             </tr>
         )
     }
@@ -24,13 +28,15 @@ export default function Tabela(props: TabelaProps) {
         return props.eventos?.map((evento, i) => {
             return (
                 <tr key={evento.id}
-                className={`${i % 2 === 0 ? 'bg-indigo-200' : 'bg-indigo-100'} `}>
+                    className={`${i % 2 === 0 ? 'bg-indigo-200' : 'bg-indigo-100'} `}>
                     <td className="text-left p-3">{evento.id}</td>
                     <td className="text-left p-3">{evento.nome}</td>
                     <td className="text-left p-3">{evento.data}</td>
                     <td className="text-left p-3">{evento.descricao}</td>
                     <td className="text-left p-3">{evento.status}</td>
-                    <td className="text-left p-3">{renderizarAcoes(evento)}</td>
+                    {exibirAcoes 
+                    ? renderizarAcoes(evento)
+                    : false }
                 </tr>
             )
         })
@@ -38,13 +44,17 @@ export default function Tabela(props: TabelaProps) {
 
     function renderizarAcoes(evento: Evento) {
         return (
-            <td className="flex">
-                <button className={`flex justify-center items
-                text-green-600 rounded-full p-2 m-1
-                hover:bg-gray-100`}>{IconeEdicao}</button>
-                <button className={`flex justify-center items
-                text-red-600 rounded-full p-2 m-1
-                hover:bg-gray-100`}>{IconeLixo}</button>
+            <td className="flex justify-center">
+                {props.eventoSelecionado ? (
+                    <button onClick={() => props.eventoSelecionado?.(evento)} className={`flex justify-center items
+                    text-green-600 rounded-full p-2 m-1
+                    hover:bg-gray-100`}>{IconeEdicao}</button>
+                ) : false }
+                {props.eventoExcluido ? (
+                    <button onClick={() => props.eventoExcluido?.(evento)} className={`flex justify-center items
+                    text-red-600 rounded-full p-2 m-1
+                    hover:bg-gray-100`}>{IconeLixo}</button>
+                ) : false}
             </td>
         )
     }
