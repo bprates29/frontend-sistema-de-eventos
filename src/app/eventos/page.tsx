@@ -1,5 +1,6 @@
 'use client';
 import Botao from "@/components/eventos/botao";
+import Formulario from "@/components/eventos/formulario";
 import Layout from "@/components/eventos/layout";
 import Tabela from "@/components/eventos/tabela";
 import Evento from "@/core/Evento";
@@ -23,13 +24,14 @@ export default function Eventos() {
      text-white`}>
       <Layout titulo="Cadastro de eventos">
         <div className="flex justify-end">
-          <Botao className="mb-4">
+          <Botao className="mb-4" cor="bg-gradient-to-r from-green-500 to-green-700">
             Novo evento
           </Botao>
         </div>
         <Tabela eventos={eventos}
           eventoSelecionado={eventoSelecionado}
           eventoExcluido={eventoExcluido}></Tabela>
+          <Formulario evento={eventos[0]}></Formulario>
       </Layout>
     </div>
   )
