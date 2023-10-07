@@ -8,10 +8,14 @@ import { useState } from "react";
 
 export default function Eventos() {
 
+  const [evento, setEvento] = useState<Evento>(Evento.vazio())
+  const [visivel, setVisivel] = useState<'tabela' | 'form'>('tabela')
+
   const eventos = Evento.geraEventosMock()
 
   function eventoSelecionado(evento: Evento) {
-    console.log(evento.nome)
+    setEvento(evento)
+    setVisivel('form')
   }
 
   function eventoExcluido(evento: Evento) {
@@ -23,7 +27,11 @@ export default function Eventos() {
     setVisivel("tabela")
   }
 
-  const [visivel, setVisivel] = useState<'tabela' | 'form'>('tabela')
+  function novoEvento() {
+    setEvento(Evento.vazio())
+    setVisivel("form")
+  }
+
 
   return (
     <div className={`
@@ -35,7 +43,7 @@ export default function Eventos() {
           <>
             <div className="flex justify-end">
               <Botao className="mb-4" cor="bg-gradient-to-r from-green-500 to-green-700"
-                onClick={() => setVisivel('form')}>
+                onClick={() => novoEvento()}>
                 Novo evento
               </Botao>
             </div>
@@ -44,7 +52,7 @@ export default function Eventos() {
               eventoExcluido={eventoExcluido}></Tabela>
           </>
         ) : (
-          <Formulario evento={eventos[0]}
+          <Formulario evento={evento}
             eventoMudou={salvarEvento}
             cancelado={() => setVisivel('tabela')} />
         )}

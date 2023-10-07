@@ -28,4 +28,9 @@ export default class Evento {
           )
         ]
       }
+
+
+    static vazio(): Evento {
+      return new Evento(null, "", "", "", "");
+    }
 }
