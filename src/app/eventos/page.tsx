@@ -4,14 +4,31 @@ import Formulario from "@/components/eventos/formulario";
 import Layout from "@/components/eventos/layout";
 import Tabela from "@/components/eventos/tabela";
 import Evento from "@/core/Evento";
-import { useState } from "react";
+import { fetchEventos } from "@/service/eventoService";
+import { useEffect, useState } from "react";
 
 export default function Eventos() {
 
   const [evento, setEvento] = useState<Evento>(Evento.vazio())
   const [visivel, setVisivel] = useState<'tabela' | 'form'>('tabela')
 
-  const eventos = Evento.geraEventosMock()
+  const [eventos, setEventos] = useState<Evento[]>([]);
+
+  useEffect(() => {
+    if (visivel === 'tabela') {
+      const loadEventos = async () => {
+        try {
+          const dados = await fetchEventos();
+          setEventos(dados);
+        } catch (error) {
+          console.error("Erro ao buscar eventos:", error);
+        }
+      }
+  
+      loadEventos();
+    }
+  }, [visivel]);  
+  
 
   function eventoSelecionado(evento: Evento) {
     setEvento(evento)
