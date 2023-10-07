@@ -20,6 +20,7 @@ export default function Eventos() {
 
   function salvarEvento(evento: Evento) {
     console.log(evento)
+    setVisivel("tabela")
   }
 
   const [visivel, setVisivel] = useState<'tabela' | 'form'>('tabela')
