@@ -35,3 +35,12 @@ export const cadastrarEvento = async (evento: Evento): Promise<Evento> => {
       throw error;
     }
   };
+
+  export const excluirEvento = async (id: number): Promise<void> => {
+    try {
+      await axios.delete(`${BASE_URL}/eventos/${id}`);
+    } catch (error) {
+      console.error("Erro ao excluir evento:", error);
+      throw error;
+    }
+  };

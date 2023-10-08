@@ -4,7 +4,7 @@ import Formulario from "@/components/eventos/formulario";
 import Layout from "@/components/eventos/layout";
 import Tabela from "@/components/eventos/tabela";
 import Evento from "@/core/Evento";
-import { atualizarEvento, cadastrarEvento, fetchEventos } from "@/service/eventoService";
+import { atualizarEvento, cadastrarEvento, excluirEvento, fetchEventos } from "@/service/eventoService";
 import { useEffect, useState } from "react";
 
 export default function Eventos() {
@@ -35,8 +35,20 @@ export default function Eventos() {
     setVisivel('form')
   }
 
-  function eventoExcluido(evento: Evento) {
-    console.log(evento.nome)
+  async function eventoExcluido(evento: Evento) {
+    const confirmacao = window.confirm("Tem certeza de que deseja excluir este evento?");
+    if (confirmacao) {
+      try {
+        if (evento.id !== null) {
+          await excluirEvento(evento.id);
+        } else {
+          console.error("eventoId é null!");
+        }
+        setEventos(prevEventos => prevEventos.filter(ev => ev.id !== evento.id));
+      } catch (error) {
+        console.error("Erro ao excluir evento:", error);
+      }
+    }
   }
 
   function salvarOuAlterarEvento(evento: Evento) {
@@ -69,7 +81,6 @@ export default function Eventos() {
     setEvento(Evento.vazio())
     setVisivel("form")
   }
-
 
   return (
     <div className={`
