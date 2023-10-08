@@ -25,3 +25,13 @@ export const cadastrarEvento = async (evento: Evento): Promise<Evento> => {
       throw error;
     }
   };
+
+  export const atualizarEvento = async (evento: Evento): Promise<Evento> => {
+    try {
+      const response = await axios.put<Evento>(`${BASE_URL}/eventos/${evento.id}`, evento);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar evento:", error);
+      throw error;
+    }
+  };

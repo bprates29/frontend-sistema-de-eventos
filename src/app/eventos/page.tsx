@@ -4,7 +4,7 @@ import Formulario from "@/components/eventos/formulario";
 import Layout from "@/components/eventos/layout";
 import Tabela from "@/components/eventos/tabela";
 import Evento from "@/core/Evento";
-import { cadastrarEvento, fetchEventos } from "@/service/eventoService";
+import { atualizarEvento, cadastrarEvento, fetchEventos } from "@/service/eventoService";
 import { useEffect, useState } from "react";
 
 export default function Eventos() {
@@ -24,11 +24,11 @@ export default function Eventos() {
           console.error("Erro ao buscar eventos:", error);
         }
       }
-  
+
       loadEventos();
     }
-  }, [visivel]);  
-  
+  }, [visivel]);
+
 
   function eventoSelecionado(evento: Evento) {
     setEvento(evento)
@@ -37,6 +37,23 @@ export default function Eventos() {
 
   function eventoExcluido(evento: Evento) {
     console.log(evento.nome)
+  }
+
+  function salvarOuAlterarEvento(evento: Evento) {
+    if (evento.id) {
+      alterarEvento(evento)
+    } else {
+      salvarEvento(evento)
+    }
+  }
+
+  async function alterarEvento(evento: Evento) {
+    try {
+      const eventoAtualizado = await atualizarEvento(evento);
+      setVisivel("tabela");
+    } catch (error) {
+      console.error("Erro ao atualizar evento:", error);
+    }
   }
 
   async function salvarEvento(evento: Evento) {
@@ -74,7 +91,7 @@ export default function Eventos() {
           </>
         ) : (
           <Formulario evento={evento}
-            eventoMudou={salvarEvento}
+            eventoMudou={salvarOuAlterarEvento}
             cancelado={() => setVisivel('tabela')} />
         )}
       </Layout>

@@ -1,3 +1,5 @@
+import { stringParaEntradaDeData } from "@/utils/converters";
+
 export default class Evento {
     id: number | null;
     nome: string;
@@ -31,6 +33,6 @@ export default class Evento {
 
 
     static vazio(): Evento {
-      return new Evento(null, "", "", "", "");
+      return new Evento(null, "", stringParaEntradaDeData(""), "", "");
     }
 }
