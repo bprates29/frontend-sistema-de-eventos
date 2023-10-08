@@ -4,7 +4,7 @@ import Formulario from "@/components/eventos/formulario";
 import Layout from "@/components/eventos/layout";
 import Tabela from "@/components/eventos/tabela";
 import Evento from "@/core/Evento";
-import { fetchEventos } from "@/service/eventoService";
+import { cadastrarEvento, fetchEventos } from "@/service/eventoService";
 import { useEffect, useState } from "react";
 
 export default function Eventos() {
@@ -39,9 +39,13 @@ export default function Eventos() {
     console.log(evento.nome)
   }
 
-  function salvarEvento(evento: Evento) {
-    console.log(evento)
-    setVisivel("tabela")
+  async function salvarEvento(evento: Evento) {
+    try {
+      const novoEvento = await cadastrarEvento(evento);
+      setVisivel("tabela");
+    } catch (error) {
+      console.error("Erro ao salvar evento:", error);
+    }
   }
 
   function novoEvento() {

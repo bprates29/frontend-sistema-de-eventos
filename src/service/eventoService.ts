@@ -15,3 +15,13 @@ export const fetchEventos = async (): Promise<Evento[]> => {
     throw new Error('Erro ao buscar eventos');
   }
 };
+
+export const cadastrarEvento = async (evento: Evento): Promise<Evento> => {
+    try {
+      const response = await axios.post<Evento>(`${BASE_URL}/eventos`, evento);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao cadastrar evento:", error);
+      throw error;
+    }
+  };
