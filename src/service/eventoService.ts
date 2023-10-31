@@ -5,7 +5,7 @@ interface ApiResponse {
     content: Evento[];
 }
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'https://www.eventos.bprates.com.br/';
 
 export const fetchEventos = async (): Promise<Evento[]> => {
   try {
