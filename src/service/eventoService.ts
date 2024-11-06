@@ -12,6 +12,7 @@ export const fetchEventos = async (): Promise<Evento[]> => {
     const response = await axios.get<ApiResponse>(`${BASE_URL}/eventos`);
     return response.data.content;
   } catch (error) {
+    console.error('Erro ao buscar eventos:', error);
     throw new Error('Erro ao buscar eventos');
   }
 };
